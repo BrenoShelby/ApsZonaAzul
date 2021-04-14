@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Veículos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <ion-list>
+    <ion-item class="item-lista" routerLink="/veiculos/edit">
+      <ion-col size="6">
+        <img src="https://www.newsedan.com.br/pub/modelos/jeep/renegade/colorizer/colorizer-renegade-limited-metalica-deep-brown.png">
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>
+          <h2>fhp-7200</h2>
+          <ion-text color="medium">
+            <h3>Jeep</h3>
+            <h5>Renegade</h5>
+          </ion-text>
+        </ion-label>
+      </ion-col>
+    </ion-item>
+
+    <ion-item class="item-lista"  routerLink="/veiculos/edit">
+      <ion-col size="6">
+        <img src="https://images.dealer.com/ddc/vehicles/2020/Honda/Civic%20Si/Sedan/perspective/front-left/2020_76.png">
+      </ion-col>
+      <ion-col size="6">
+        <ion-label>
+          <h2>bod-2057</h2>
+          <ion-text color="medium">
+            <h3>Honda</h3>
+            <h5>Civic</h5>
+          </ion-text>
+        </ion-label>
+      </ion-col>
+    </ion-item>
+  
+  <ion-item class="item-lista"  routerLink="/veiculos/edit">
+    <ion-col size="6">
+      <img src="https://svg-image.s3.amazonaws.com/south-honda/019-0121-SHO873/model1.png">
+    </ion-col>
+    <ion-col size="6">
+      <ion-label>
+        <h2>emy-8998</h2>
+        <ion-text color="medium">
+          <h3>Honda</h3>
+          <h5>Accord</h5>
+        </ion-text>
+      </ion-label>
+    </ion-col>
+  </ion-item>
+</ion-list>
+
+
+  
+  <ion-fab horizontal="center" routerLink="/veiculos/create">
+    <ion-fab-button color="secondary"  class="botao-adicionar">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+ 
