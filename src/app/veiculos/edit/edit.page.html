@@ -41,18 +41,18 @@
       <ion-select-option *ngFor="let modelo of modelosDaMarca" [value]="modelo.id">{{modelo.nome}}</ion-select-option>
     </ion-select>
   </ion-item>
-
-  <ion-item>
-    <ion-label>Veículo Principal <ion-text color="danger">*</ion-text></ion-label>
-    <ion-toggle slot="end" [(ngModel)] ="veiculoPrincipal"></ion-toggle>
-  </ion-item>
   
   <ion-button (click)="atualizarVeiculo()" class="botao-salvar ion-margin" size="large" shape ="round" expand="block" color="secondary">
     Salvar Alterações
   </ion-button>
 
-  <div class="ion-text-center"> 
-    <ion-label>Visualização das alterações</ion-label>
+  <ion-button expand="block" fill="clear" shape="round">
+    Excluir veículo
+  </ion-button>
+
+  
+  <div class="ion-text-center ion-padding-top"> 
+    <ion-label>Visualização das alterações (demonstração)</ion-label>
   </div>
   
   <ion-item class="item-lista ">
@@ -66,7 +66,6 @@
           <h3>{{veiculoAlteracao.marca.nome}}</h3>
           <h4>{{veiculoAlteracao.modelo.nome}}</h4>
           <h5>{{veiculoAlteracao.cor}} </h5>
-          <h6>Veículo principal: {{veiculoAlteracao.veiculoPrincipal}}</h6>
         </ion-text>
       </ion-label>
     </ion-col>

@@ -47,11 +47,12 @@
     Salvar
   </ion-button>
 
-    <!--Listagem. Somente exemplificação-->
+    <!--Listagem. Somente demostração-->
     <ion-list *ngIf="veiculosCadastrados.length > 0">
-      <ion-list-header>
-        Meus Veículos
-      </ion-list-header>
+      
+      <div class="ion-text-center"> 
+        <ion-label>Meus veículos (demonstração)</ion-label>
+      </div>
 
       <ion-item *ngFor="let veiculo of veiculosCadastrados" class="item-lista">
         <ion-col size="6">

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 type Cor = "Prata" | "Preto" | "Branco" | "Cinza" | "Azul" | "Verde" | "Vermelho" | "Amarelo" | "Marrom" ;
 
@@ -34,7 +35,6 @@ class Veiculo{
   modelo: Modelo;
   placa: String;
   cor: Cor;
-  veiculoPrincipal: boolean;
 
   constructor(id, marca, modelo, placa, cor) {
     this.id = id;
@@ -42,7 +42,6 @@ class Veiculo{
     this.modelo = modelo;
     this.placa = placa; 
     this.cor = cor;
-    this.veiculoPrincipal = false;
   }
 }
 
@@ -127,7 +126,7 @@ export class CreatePage implements OnInit {
       id:8,
       nome: "Yaris", 
       marcaId: 2,
-      urlImgModelo: "https://lh3.googleusercontent.com/proxy/32D9SHrVhAtefQKZBL-UKChNVO3cP-xHHzXlQMdYI0EFVZM8qNikMnRxHUEN-sT53w9V3MDj-hK3pYDkFsYIKU0YSkJgjqS2kj9krwskP58i39CbjgJ-7R9N_rKw9VgulPFUV8vv"
+      urlImgModelo: "https://cloudflarestockimages.dealereprocess.com/resrc/images/stockphoto_asset-c_limit,f_auto,fl_lossy,w_auto/v1/svp/Colors_PNG1280/2019/19toyota/19toyotayarislesd3ra/toyota_19yarislesd3ra_angularfront_graphite"
     },
     {
       id:9,
@@ -178,7 +177,7 @@ export class CreatePage implements OnInit {
   ]
 
 
-  constructor() { }
+  constructor(private alertController : AlertController) { }
 
   ngOnInit() {
   }
@@ -199,14 +198,14 @@ export class CreatePage implements OnInit {
     let marca = this.buscarMarcaPorId(this.idMarcaSelecionada);
     let modelo = this.buscarModeloPorId(this.idModeloSelecionado);
 
-      if(this.placa != undefined && this.placa.length == 8 && this.idMarcaSelecionada != undefined && this.idModeloSelecionado != undefined){
+      if(this.placa.trim().length != 0 && this.placa != undefined && this.placa.length == 8 && this.cor != undefined && this.idMarcaSelecionada != undefined && this.idModeloSelecionado != undefined){
       
       const novoVeiculo = new Veiculo(this.chaveSequencialVeiculos, marca, modelo, this.placa, this.cor);
       this.veiculosCadastrados.push(novoVeiculo);
       this.chaveSequencialVeiculos++;
       
     }else{
-      alert("Por favor, preencha o formulário corretamente!")
+      this.dispararAlerta();
     }
 
     this.limparCamposForm();
@@ -248,5 +247,17 @@ export class CreatePage implements OnInit {
       this.modelosDaMarca.pop();
     }
   }
+
+
+  private async dispararAlerta(){
+    const alert = await this.alertController.create({
+      header: "Atenção!",
+      message: "Preencha o formulário corretamente!",
+      buttons:["OK"]
+    });
+
+    alert.present();
+  }
+
 
 }

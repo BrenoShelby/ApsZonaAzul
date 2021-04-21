@@ -26,25 +26,25 @@
   text-decoration: none;
 }
 
-//Inicio
+//
 
 .menu-item{
   border-radius: 15px;
   background:#0f0f0f;
   margin: 1rem auto;
-  padding: 3rem;
+  padding: 2.4rem;
 }
 
 .menu-item h4{ 
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0;
 }
 
 .menu-icon {
   font-size: 45px;
   color: #09b5f3;
-  margin-right: 1rem;
+  
 }
 
 
@@ -53,7 +53,8 @@
 }
 
 
-
-
-
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
 

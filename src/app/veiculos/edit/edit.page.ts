@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 type Cor = "Prata" | "Preto" | "Branco" | "Cinza" | "Azul" | "Verde" | "Vermelho" | "Amarelo" | "Marrom" ;
 
@@ -34,7 +35,6 @@ class Veiculo{
   modelo: Modelo;
   placa: String;
   cor: Cor;
-  veiculoPrincipal: boolean;
 
   constructor(id, marca, modelo, placa, cor) {
     this.id = id;
@@ -42,7 +42,6 @@ class Veiculo{
     this.modelo = modelo;
     this.placa = placa; 
     this.cor = cor;
-    this.veiculoPrincipal = false;
   }
 }
 
@@ -58,7 +57,6 @@ export class EditPage implements OnInit {
   public cor :Cor =  "Marrom";
   public idMarcaSelecionada : number = 3;
   public idModeloSelecionado : number = 14;
-  public veiculoPrincipal: boolean = false;
   
   veiculoAlteracao: Veiculo = {
     id: 1,
@@ -74,7 +72,6 @@ export class EditPage implements OnInit {
     },
     placa: "FHP-7200",
     cor: "Marrom",
-    veiculoPrincipal: false
   }
 
 
@@ -144,7 +141,7 @@ export class EditPage implements OnInit {
       id:8,
       nome: "Yaris", 
       marcaId: 2,
-      urlImgModelo: "https://lh3.googleusercontent.com/proxy/32D9SHrVhAtefQKZBL-UKChNVO3cP-xHHzXlQMdYI0EFVZM8qNikMnRxHUEN-sT53w9V3MDj-hK3pYDkFsYIKU0YSkJgjqS2kj9krwskP58i39CbjgJ-7R9N_rKw9VgulPFUV8vv"
+      urlImgModelo: "https://cloudflarestockimages.dealereprocess.com/resrc/images/stockphoto_asset-c_limit,f_auto,fl_lossy,w_auto/v1/svp/Colors_PNG1280/2019/19toyota/19toyotayarislesd3ra/toyota_19yarislesd3ra_angularfront_graphite"
     },
     {
       id:9,
@@ -208,7 +205,7 @@ export class EditPage implements OnInit {
   ]
 
  
-  constructor() { }
+  constructor(private alertController : AlertController) { }
 
   ngOnInit() {
   }
@@ -248,11 +245,6 @@ export class EditPage implements OnInit {
       }
     });
 
-    if(marcaRetorno != undefined){
-      console.log("não é undefined")
-    }else{
-      console.log("é undefined")
-    }
     return marcaRetorno;
   }
 
@@ -270,12 +262,28 @@ export class EditPage implements OnInit {
 
   
   public atualizarVeiculo(){
-    this.veiculoAlteracao.placa = this.placa;
-    this.veiculoAlteracao.cor =  this.cor;
-    this.veiculoAlteracao.marca = this.buscarMarcaPorId(this.idMarcaSelecionada);
-    this.veiculoAlteracao.modelo = this.buscarModeloPorId(this.idModeloSelecionado);
-    this.veiculoAlteracao.veiculoPrincipal = this.veiculoPrincipal;
+
+    if(this.placa.trim().length != 0 && this.placa != undefined && this.placa.length == 8 && this.cor != undefined && this.idMarcaSelecionada != undefined && this.idModeloSelecionado != undefined){
+      
+      this.veiculoAlteracao.placa = this.placa;
+      this.veiculoAlteracao.cor =  this.cor;
+      this.veiculoAlteracao.marca = this.buscarMarcaPorId(this.idMarcaSelecionada);
+      this.veiculoAlteracao.modelo = this.buscarModeloPorId(this.idModeloSelecionado);
+      
+    }else{
+      this.dispararAlerta();
+    }
+    
   }
 
+  private async dispararAlerta(){
+    const alert = await this.alertController.create({
+      header: "Atenção!",
+      message: "Preencha o formulário corretamente!",
+      buttons:["OK"]
+    });
+
+    alert.present();
+  }
 
 }
