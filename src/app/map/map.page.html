@@ -1,9 +1,20 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>map</ion-title>
+    <ion-title>
+      Zona Azul
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]='search' (ionChange)='searchChanged()' placeholder='Onde você está?'></ion-searchbar>
+    <ion-list class='ion-margin-horizontal' [hidden]='!search.length'>
+      <ion-item *ngFor="let result of searchResults">
+        {{result.description}}
+      </ion-item>
+    </ion-list>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true">
+  <div #map id="map"></div>
 </ion-content>
