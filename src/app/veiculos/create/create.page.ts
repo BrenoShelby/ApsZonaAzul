@@ -198,17 +198,15 @@ export class CreatePage implements OnInit {
     let marca = this.buscarMarcaPorId(this.idMarcaSelecionada);
     let modelo = this.buscarModeloPorId(this.idModeloSelecionado);
 
-      if(this.placa.trim().length != 0 && this.placa != undefined && this.placa.length == 8 && this.cor != undefined && this.idMarcaSelecionada != undefined && this.idModeloSelecionado != undefined){
+      if(this.placa != undefined && this.placa.trim().length != 0 && this.placa.length == 8 && this.cor != undefined && this.idMarcaSelecionada != undefined && this.idModeloSelecionado != undefined){
       
       const novoVeiculo = new Veiculo(this.chaveSequencialVeiculos, marca, modelo, this.placa, this.cor);
       this.veiculosCadastrados.push(novoVeiculo);
       this.chaveSequencialVeiculos++;
-      
+      this.limparCamposForm();
     }else{
       this.dispararAlerta();
     }
-
-    this.limparCamposForm();
   }
 
 
