@@ -47,9 +47,9 @@
   </ion-button>
 
   <ion-list *ngIf="cartoesCadastrados.length > 0">
-    <ion-list-header class="ion-text-center">
-      <ion-label>Meus Cartões (demonstração do resultado)</ion-label>
-    </ion-list-header>
+    <div class="ion-text-center ion-padding-top"> 
+      <ion-label>Meus cartões (demonstração)</ion-label>
+    </div>
     <ion-item class="item-lista" *ngFor="let cartao of cartoesCadastrados">
       <ion-row class="ion-align-items-center">
         <ion-col size="3">

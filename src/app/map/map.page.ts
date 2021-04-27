@@ -1,4 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 declare var google: any;
 
@@ -18,8 +21,13 @@ export class MapPage implements OnInit {
 
   @ViewChild('map', {read: ElementRef, static: false}) mapRef: ElementRef;
 
-  constructor() {
+  public placaSelecionada;
+  public cartaoSelecionado;
+  public endereco = "Av. Paulista, 1200";
+
+  constructor(private alertController : AlertController, private route: ActivatedRoute ,private router: Router) {
     console.log(google)
+    this.router = router;
   }
 
   ionViewDidEnter() {
@@ -47,5 +55,46 @@ export class MapPage implements OnInit {
 
   ngOnInit() {
   }
+
+
+  public confirmar() {
+    if(this.cartaoSelecionado == undefined || this.placaSelecionada == undefined){
+      this.dispararAlerta();
+    }else{
+      this.confirmarPagamentoAlert();
+    }
+     
+  }
+
+  private async confirmarPagamentoAlert(){
+    const alert = await this.alertController.create({
+      header: "Atenção!",
+      message: "Você confirma a compra?",
+      buttons:[
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: "Confirmar",
+          handler: () => {
+            this.router.navigate(['/map/comprovante'], { queryParams: { placa: this.placaSelecionada , endereco: this.endereco, dataHora: new Date()}});
+          }
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  private async dispararAlerta(){
+    const alert = await this.alertController.create({
+      header: "Atenção!",
+      message: "O método de pagamento e a placa do veículo devem ser selecionados!",
+      buttons:["OK"]
+    });
+
+    alert.present();
+  }
+
 
 }

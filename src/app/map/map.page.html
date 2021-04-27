@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>
-      Zona Azul
+      Estacionar
     </ion-title>
   </ion-toolbar>
 
@@ -19,23 +19,36 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div #map id="map"></div>
+  <div #map id="map"></div> 
+
+  <ion-row  class="ion-justify-content-center">
+    <ion-col size="6" class="ion-text-center">
+      <div class="cads">
+        <h3> 1 CAD - 1 Hora</h3>
+        <h4>R$ 5,00</h4>
+      </div>
+    </ion-col>
+  </ion-row>
+
 
   <ion-item>
-    <ion-select  multiple="false" placeholder="Selecione cartão">
-      <ion-select-option value= "**** **** **** 7441">**** **** **** 7441</ion-select-option>
-      <ion-select-option value= "**** **** **** 5021">**** **** **** 5021</ion-select-option>
-      <ion-select-option value= "**** **** **** 2131">**** **** **** 2131</ion-select-option>
+    <ion-select [(ngModel)]="cartaoSelecionado" multiple="false" placeholder="Selecione o método de pagamento">
+      <ion-select-option value= "final 7441">**** **** **** 7441</ion-select-option>
+      <ion-select-option value= "Final 5021">**** **** **** 5021</ion-select-option>
+      <ion-select-option value= "Final 2131">**** **** **** 2131</ion-select-option>
     </ion-select>
   </ion-item>
   
   <ion-item>
-    <ion-select  multiple="false" placeholder="Selecione veículo">
-      <ion-select-option value= "FHP-7200">Placa FHP-7200</ion-select-option>
-      <ion-select-option value= "BOD-2057">Placa BOD-2057</ion-select-option>
-      <ion-select-option value= "EMY-8998">Placa EMY-8998</ion-select-option>
+    <ion-select [(ngModel)]="placaSelecionada" multiple="false" placeholder="Selecione a placa do veículo">
+      <ion-select-option value= "FHP-7200">FHP-7200</ion-select-option>
+      <ion-select-option value= "BOD-2057">BOD-2057</ion-select-option>
+      <ion-select-option value= "EMY-8998">EMY-8998</ion-select-option>
     </ion-select>
   </ion-item>
-  
-  
+    
+  <ion-button (click)="confirmar()" class="botao-salvar" size="large" shape ="round" expand="block" color="secondary">
+    Confirmar
+  </ion-button>
+
 </ion-content>

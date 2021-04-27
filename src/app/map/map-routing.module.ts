@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: MapPage
+  },  {
+    path: 'comprovante',
+    loadChildren: () => import('./comprovante/comprovante.module').then( m => m.ComprovantePageModule)
   }
+
 ];
 
 @NgModule({
