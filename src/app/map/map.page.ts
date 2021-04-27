@@ -13,6 +13,8 @@ export class MapPage implements OnInit {
   public search: string = '';
   private googleAutocomplete = new google.maps.places.AutocompleteService();
   public searchResults = new Array<any>();
+  public lat = -23.573172;
+  public lon = -46.629758;
 
   @ViewChild('map', {read: ElementRef, static: false}) mapRef: ElementRef;
 
@@ -25,7 +27,7 @@ export class MapPage implements OnInit {
   }
 
   showMap() {
-    const location = new google.maps.LatLng(-23.573172, -46.629758);
+    const location = new google.maps.LatLng(this.lat, this.lon);
     const options = {
       center: location,
       zoom: 15,
