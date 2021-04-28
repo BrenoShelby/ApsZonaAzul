@@ -89,11 +89,11 @@ export class CreatePage implements OnInit {
         this.cartoesCadastrados.push(novoCartao);
         this.chaveSequencialCartoes++;
         console.log("lista de cartões cadastrados >>>",this.cartoesCadastrados);
-       
+        this.limparCamposForm();
       }
     }
 
-    this.limparCamposForm();
+    
   }
 
 
