@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { CartaoService } from '../services/cartao.service';
+import { VeiculoService } from '../services/veiculo.service';
 
 declare var google: any;
 
@@ -25,7 +27,12 @@ export class MapPage implements OnInit {
   public cartaoSelecionado;
   public endereco = "Av. Paulista, 1200";
 
-  constructor(private alertController : AlertController, private route: ActivatedRoute ,private router: Router) {
+  public cartoesCadastrados = this.cartaoService.cartoesCadastrados;
+  public veiculosCadastrados = this.veiculoService.veiculos;
+
+
+  constructor(private alertController : AlertController, private route: ActivatedRoute ,private router: Router, 
+    private cartaoService : CartaoService, private veiculoService : VeiculoService) {
     console.log(google)
     this.router = router;
   }

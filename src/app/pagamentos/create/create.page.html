@@ -40,27 +40,8 @@
     <ion-input  type="text" [(ngModel)]= "cpf"></ion-input>
   </ion-item>
 
-  
-  
   <ion-button (click)="cadastrarCartao()" class="botao-salvar" size="large" shape ="round" expand="block" color="secondary">
     Salvar
   </ion-button>
 
-  <ion-list *ngIf="cartoesCadastrados.length > 0">
-    <div class="ion-text-center ion-padding-top"> 
-      <ion-label>Meus cartões (demonstração)</ion-label>
-    </div>
-    <ion-item class="item-lista" *ngFor="let cartao of cartoesCadastrados">
-      <ion-row class="ion-align-items-center">
-        <ion-col size="3">
-            <img src={{cartao.bandeira.urlImagem}}>
-        </ion-col>
-        <ion-col size="auto">
-          <ion-label>
-            <h2>{{cartao.numero}}</h2>
-          </ion-label>
-        </ion-col>
-    </ion-row>
-    </ion-item>
-  </ion-list>
 </ion-content>
