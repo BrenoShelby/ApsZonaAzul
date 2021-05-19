@@ -80,7 +80,7 @@ export class MapPage implements OnInit {
         map: this.map,
       });
     });
-
+    this.endereco = this.search;
     this.search = '';
   }
 
