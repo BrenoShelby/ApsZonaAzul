@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -18,8 +18,9 @@ export class MapPage implements OnInit {
   public search: string = '';
   private googleAutocomplete = new google.maps.places.AutocompleteService();
   public searchResults = new Array<any>();
-  public lat = -23.573172;
-  public lon = -46.629758;
+  private initLat: number = -23.573172;
+  private initLon: number = -46.629758;
+  private geocoder = new google.maps.Geocoder();
 
   @ViewChild('map', {read: ElementRef, static: false}) mapRef: ElementRef;
 
@@ -31,33 +32,56 @@ export class MapPage implements OnInit {
   public veiculosCadastrados = this.veiculoService.veiculos;
 
 
-  constructor(private alertController : AlertController, private route: ActivatedRoute ,private router: Router, 
-    private cartaoService : CartaoService, private veiculoService : VeiculoService) {
+  constructor(
+    private alertController : AlertController, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private cartaoService : CartaoService, 
+    private veiculoService : VeiculoService,
+    private ngZone: NgZone) {
     console.log(google)
     this.router = router;
   }
 
   ionViewDidEnter() {
-    this.showMap();
+    this.showMap(this.initLat, this.initLon);
   }
 
-  showMap() {
-    const location = new google.maps.LatLng(this.lat, this.lon);
+  showMap(lat: number, lon: number) {
+    const location = new google.maps.LatLng(lat, lon);
     const options = {
       center: location,
       zoom: 15,
       disableDefaultUI: true
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options)
+    };
+
+    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
   }
 
   searchChanged() {
     if (!this.search.trim().length) return;
 
     this.googleAutocomplete.getPlacePredictions({ input: this.search }, predictions => {
-      this.searchResults = predictions;
-      console.log(predictions);
+      this.ngZone.run(() => {
+        this.searchResults = predictions;
+      })
     });
+  }
+
+  changeLocation(result) {
+    this.geocoder.geocode({ 'placeId': result.place_id }, responses => {
+      const lat = responses[0].geometry.location.lat();
+      const lon = responses[0].geometry.location.lng();
+
+      this.showMap(lat, lon);
+
+      new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lon),
+        map: this.map,
+      });
+    });
+
+    this.search = '';
   }
 
   ngOnInit() {
