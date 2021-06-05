@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CompraService } from '../services/compra.service';
 
 @Component({
   selector: 'app-compras',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComprasPage implements OnInit {
 
-  constructor() { }
+  public compras = this.compraService.compras;
+
+  constructor(private compraService : CompraService) { }
 
   ngOnInit() {
   }

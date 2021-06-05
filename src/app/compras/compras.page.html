@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <ion-card *ngFor="let compra of compras">
     <ion-card-header>
       <ion-row>
         <ion-col size="2">
@@ -25,15 +25,15 @@
     <ion-row>
       <ion-col size="12">
         <ion-card-subtitle class="subtitle">Placa do veículo</ion-card-subtitle>
-        <p class="white-bold-text">{{placa}}</p>
+        <p class="white-bold-text">{{compra.placaVeiculo}}</p>
       </ion-col>
       <ion-col size="12">
         <ion-card-subtitle class="subtitle">Data/Hora</ion-card-subtitle>
-        <p class="white-bold-text">{{dataHora | date:"dd/MM/yyyy 'às' HH:mm"}}</p>
+        <p class="white-bold-text">{{compra.dataHora | date:"dd/MM/yyyy 'às' HH:mm"}}</p>
       </ion-col>
       <ion-col size="12">
         <ion-card-subtitle class="subtitle">Localização</ion-card-subtitle>
-        <p class="white-bold-text">{{endereco}}</p>
+        <p class="white-bold-text">{{compra.localizacao}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
