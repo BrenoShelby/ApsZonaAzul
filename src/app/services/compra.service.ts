@@ -18,18 +18,13 @@ export class CompraService {
   private chaveSequencialCompras: number = 1;
 
   public compras : Compra[] = [
-    {
-      id: 1,
-      placaVeiculo: 'ABC-1234',
-      localizacao: 'Rua 123456',
-      dataHora: new Date(),
-    },
 
-    {
-      id: 2,
-      placaVeiculo: 'AXY-4567',
-      localizacao: 'Rua DOS BOBOS',
-      dataHora: new Date(),
-    }
   ]
+
+public salvar( compra : Compra){
+  compra.id = this.chaveSequencialCompras;
+  this.compras.push(compra);
+  this.chaveSequencialCompras++;
+}
+
 }

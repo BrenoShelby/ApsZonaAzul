@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CartaoService } from '../services/cartao.service';
 import { VeiculoService } from '../services/veiculo.service';
+import { Compra, CompraService } from '../services/compra.service';
 
 declare var google: any;
 
@@ -26,13 +27,14 @@ export class MapPage implements OnInit {
 
   public placaSelecionada;
   public cartaoSelecionado;
-  public endereco = "Av. Paulista, 1200";
-
+  public endereco;
+  compra : Compra
   public cartoesCadastrados = this.cartaoService.cartoesCadastrados;
   public veiculosCadastrados = this.veiculoService.veiculos;
 
 
   constructor(
+    private compraService : CompraService,
     private alertController : AlertController, 
     private route: ActivatedRoute, 
     private router: Router, 
@@ -108,6 +110,14 @@ export class MapPage implements OnInit {
         {
           text: "Confirmar",
           handler: () => {
+            this.compra = {
+              id: 0,
+              placaVeiculo : this.placaSelecionada,
+              localizacao: this.endereco,
+              dataHora: new Date()
+            }
+
+           this.compraService.salvar(this.compra);
             this.router.navigate(['/map/comprovante'], { queryParams: { placa: this.placaSelecionada , endereco: this.endereco, dataHora: new Date()}});
           }
         }
