@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+<div *ngIf="compras.length != 0"; else listaComprasVazia></div>
   <ion-card *ngFor="let compra of compras">
     <ion-card-header>
       <ion-row>
@@ -48,4 +49,10 @@
     </ion-row>
     </ion-card-content>
   </ion-card>
+</div>
+
+<ng-template #listaComprasVazia>
+  <h1>Não há compras a exibir</h1>
+</ng-template>
+
 </ion-content>
