@@ -30,11 +30,11 @@ export class MapPage implements OnInit {
 
   public placaSelecionada;
   public cartaoSelecionado;
-  public endereco; 
   compra : Compra 
   public cartoesCadastrados = this.cartaoService.cartoesCadastrados;
   public veiculosCadastrados = this.veiculoService.veiculos;
   public hidden = true;
+  public refLocalizacao = "";
 
   constructor(
     private compraService : CompraService,
@@ -69,7 +69,7 @@ export class MapPage implements OnInit {
   }
 
   searchChanged() {
-    if (!this.search.trim().length) return; 
+    if (!this.search.trim().length || this.search == this.refLocalizacao) return; 
 
     this.hidden=false;
     this.googleAutocomplete.getPlacePredictions({ input: this.search }, predictions => {
@@ -93,9 +93,10 @@ export class MapPage implements OnInit {
       });
     });
     
+    this.refLocalizacao = result.description;;
     this.search = result.description;
     this.hidden = true;
-    this.endereco = this.search;
+    
   }
 
   ngOnInit() {
@@ -103,14 +104,14 @@ export class MapPage implements OnInit {
 
 
   public confirmar() {
-    if(this.cartaoSelecionado == undefined || this.placaSelecionada == undefined){ //
+    if(this.cartaoSelecionado == undefined || this.placaSelecionada == undefined){ 
       this.dispararAlerta();
     }else if(!this.search.trim().length){
       this.dispararAlertaEnderecoVazio();
     }else{
       this.confirmarPagamentoAlert();
     }
-     
+      
   }
 
   private async confirmarPagamentoAlert(){
@@ -127,13 +128,13 @@ export class MapPage implements OnInit {
             this.compra = {
               id: 0,
               placaVeiculo : this.placaSelecionada,
-              localizacao: this.endereco,
+              localizacao: this.search,
               dataHora: new Date()
             }
 
 
             this.compraService.salvar(this.compra);
-            this.router.navigate(['/map/comprovante'], { queryParams: { placa: this.placaSelecionada , endereco: this.endereco, dataHora: new Date()}});
+            this.router.navigate(['/map/comprovante'], { queryParams: { placa: this.placaSelecionada , endereco: this.search, dataHora: new Date()}});
           }
         }
       ]
