@@ -10,7 +10,7 @@
 
   <ion-toolbar>
     <ion-searchbar [(ngModel)]='search' (ionChange)='searchChanged()' placeholder='Onde você está?'></ion-searchbar>
-    <ion-list class='ion-margin-horizontal' [hidden]='!search.length'>
+    <ion-list class='ion-margin-horizontal' [hidden]='hidden'>
       <ion-item (click)='changeLocation(result)' *ngFor="let result of searchResults">
         {{result.description}}
       </ion-item>

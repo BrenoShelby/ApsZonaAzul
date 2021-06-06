@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CartaoService } from '../services/cartao.service';
 import { VeiculoService } from '../services/veiculo.service';
+import { Compra, CompraService } from '../services/compra.service';
 
 declare var google: any;
 
@@ -13,6 +14,9 @@ declare var google: any;
   styleUrls: ['./map.page.scss'],
 })
 export class MapPage implements OnInit {
+
+  
+
 
   map: any;
   public search: string = '';
@@ -26,13 +30,14 @@ export class MapPage implements OnInit {
 
   public placaSelecionada;
   public cartaoSelecionado;
-  public endereco = "Av. Paulista, 1200";
-
+  public endereco; 
+  compra : Compra 
   public cartoesCadastrados = this.cartaoService.cartoesCadastrados;
   public veiculosCadastrados = this.veiculoService.veiculos;
-
+  public hidden = true;
 
   constructor(
+    private compraService : CompraService,
     private alertController : AlertController, 
     private route: ActivatedRoute, 
     private router: Router, 
@@ -41,7 +46,12 @@ export class MapPage implements OnInit {
     private ngZone: NgZone) {
     console.log(google)
     this.router = router;
+    
   }
+
+
+
+
 
   ionViewDidEnter() {
     this.showMap(this.initLat, this.initLon);
@@ -59,8 +69,9 @@ export class MapPage implements OnInit {
   }
 
   searchChanged() {
-    if (!this.search.trim().length) return;
+    if (!this.search.trim().length) return; 
 
+    this.hidden=false;
     this.googleAutocomplete.getPlacePredictions({ input: this.search }, predictions => {
       this.ngZone.run(() => {
         this.searchResults = predictions;
@@ -69,6 +80,7 @@ export class MapPage implements OnInit {
   }
 
   changeLocation(result) {
+    
     this.geocoder.geocode({ 'placeId': result.place_id }, responses => {
       const lat = responses[0].geometry.location.lat();
       const lon = responses[0].geometry.location.lng();
@@ -80,8 +92,10 @@ export class MapPage implements OnInit {
         map: this.map,
       });
     });
+    
+    this.search = result.description;
+    this.hidden = true;
     this.endereco = this.search;
-    this.search = '';
   }
 
   ngOnInit() {
@@ -89,8 +103,10 @@ export class MapPage implements OnInit {
 
 
   public confirmar() {
-    if(this.cartaoSelecionado == undefined || this.placaSelecionada == undefined){
+    if(this.cartaoSelecionado == undefined || this.placaSelecionada == undefined){ //
       this.dispararAlerta();
+    }else if(!this.search.trim().length){
+      this.dispararAlertaEnderecoVazio();
     }else{
       this.confirmarPagamentoAlert();
     }
@@ -108,6 +124,16 @@ export class MapPage implements OnInit {
         {
           text: "Confirmar",
           handler: () => {
+
+            this.compra = {
+              id: 0,
+              placaVeiculo : this.placaSelecionada,
+              localizacao: this.endereco,
+              dataHora: new Date()
+            }
+
+
+            this.compraService.salvar(this.compra);
             this.router.navigate(['/map/comprovante'], { queryParams: { placa: this.placaSelecionada , endereco: this.endereco, dataHora: new Date()}});
           }
         }
@@ -127,5 +153,14 @@ export class MapPage implements OnInit {
     alert.present();
   }
 
+  private async dispararAlertaEnderecoVazio(){
+    const alert = await this.alertController.create({
+      header: "Atenção!",
+      message: "A localização deve ser informada!",
+      buttons:["OK"]
+    });
+
+    alert.present();
+  }
 
 }

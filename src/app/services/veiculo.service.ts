@@ -108,7 +108,7 @@ export class VeiculoService {
       id:9,
       nome: "Hilux", 
       marcaId: 2,
-      urlImgModelo: "https://i.xeoto.com.vn/auto/toyota/hilux/toyota-hilux-phien-ban-24-4x4-mt-29291.png"
+      urlImgModelo: "https://carsguide-res.cloudinary.com/image/upload/f_auto,fl_lossy,q_auto,t_default/v1/editorial/hilux-sr5-my21-index-1.png"
     },
     {
       id:10,
