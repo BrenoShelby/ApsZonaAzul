@@ -22,47 +22,40 @@ export class CompraService {
 
   private chaveSequencialCompras: number = 1;
 
-  public compras : Compra[] =[
-   
+  public compras : Compra[] = [
+
   ]
 
+    public salvar(compra : Compra){
+      compra.id = this.chaveSequencialCompras;
+      this.compras.push(compra);
 
- 
+      this.storage.set('compras', this.compras);
+
+      this.chaveSequencialCompras++;
+    }
 
 
-  public salvar(compra : Compra){
-    compra.id = this.chaveSequencialCompras;
-    this.compras.push(compra);
 
-    this.storage.set('compras', this.compras);
+    private async loadFromStorage(){
+        const storedCompras =  await this.storage.get("compras") as Compra[];
 
-    this.chaveSequencialCompras++;
+      if(storedCompras){
+          this.compras.push(...storedCompras);
+          this.chaveSequencialCompras = this.calcularMaxId() + 1;
+      }
+
+    }
+
+
+    private calcularMaxId() : number{
+      const idList : number[] = [
+      ]
+
+      this.compras.forEach(compra =>{
+        idList.push(compra.id);
+      });
+
+      return Math.max(...idList);
+    }
   }
-
-
-
-  private async loadFromStorage(){
-      const storedCompras =  await this.storage.get("compras") as Compra[];
-
-     if(storedCompras){
-        this.compras.push(...storedCompras);
-        this.chaveSequencialCompras = this.calcularMaxId() + 1;
-     }
-
-  }
-
-
-  private calcularMaxId() : number{
-    const idList : number[] = [
-    ]
-
-    this.compras.forEach(compra =>{
-       idList.push(compra.id);
-    });
-
-    return Math.max(...idList);
-  }
-
-
-
-}

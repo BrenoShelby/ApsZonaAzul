@@ -124,7 +124,6 @@ export class MapPage implements OnInit {
         {
           text: "Confirmar",
           handler: () => {
-
             this.compra = {
               id: 0,
               placaVeiculo : this.placaSelecionada,
